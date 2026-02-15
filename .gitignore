@@ -1,0 +1,28 @@
+#entornos virtuales
+venv/
+.venv/
+env/
+
+#archivos de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+#IDE (pycharm)
+.idea/
+*.iml
+
+#los archivos de configuración personal
+.env
+config.ini
+secrets.py
+
+#archivos temporales
+*.log
+*.tmp
+
+#datos y caché
+*.cache
+data/*.json
+data/*.csv
