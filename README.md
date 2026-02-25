@@ -1,4 +1,4 @@
-#  TODOS LOS INTEGRANTES LEER CON ATENCION EL README.MD PARA DESARROLLAR EL PROYECTO.
+git stat#  TODOS LOS INTEGRANTES LEER CON ATENCION EL README.MD PARA DESARROLLAR EL PROYECTO.
 # leer tambien archivo config.py 
 # 1. FASE: # Aplicación de Consulta Meteorológica CLima
 
@@ -27,6 +27,7 @@ Aplicación en Python que consulta información meteorológica en tiempo real me
 
 ## Instalación
 ```bash
+
 # Instrucciones pendientes para el Sprint 2
 ```
 
@@ -34,3 +35,10 @@ Aplicación en Python que consulta información meteorológica en tiempo real me
 ```bash
 python main.py
 ```
+
+
+# cosas propuestas por hacer por Mario;
+# guardar datos en de estasdiscas de 6 meses: dia mas caluroso
+
+
+# extra : intentar hacer un widget de escritorio
