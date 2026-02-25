@@ -2,6 +2,7 @@
 Punto de entrada principal del programa """
 
 """
+PRUEBA LUCAS
 Autores: Lucas, Isamir, Josue y Adrian DAW (2026) EPSUM
 Fecha: Febrero 2026
 """
