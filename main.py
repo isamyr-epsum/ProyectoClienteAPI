@@ -1,7 +1,10 @@
 """Aplicación de Consulta Meteorológica
 Punto de entrada principal del programa """
+from time import sleep
+
+
 from src.api.weather_api import obtener_clima_actual
-from src.data.storage import guardar_historial
+from src.data.storage import guardar_historial, cargar_historial, limpiar_historial
 
 """
 Autores: Lucas, Isamir, Josue y Adrian DAW (2026) EPSUM
@@ -29,7 +32,11 @@ while True:
     elif opcion == "2":
         print("\nAguarde: funcion pendiente - sprint 2!")
     elif opcion == "3":
-        guardar_historial()
+        guardar_historial("Madrid", "la temperatura actual", 18)
+        sleep(3)
+        cargar_historial()
+        sleep(2)
+        # limpiar_historial()
     elif opcion == "4":
         print("\nAguarde: funcion pendiente - sprint 2!")
     else:
