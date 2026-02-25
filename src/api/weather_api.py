@@ -11,8 +11,9 @@ import json
 from collections import defaultdict
 
 API_KEY = "a24cf1baa02349b165a1f6206bf525bc"
-BASE_URL_CLIMA_ACTUAL = "https://api.openweathermap.org/data/2.5/weather",
+BASE_URL_CLIMA_ACTUAL = "https://api.openweathermap.org/data/2.5/weather"
 BASE_URL_PRONOSTICO= "https://api.openweathermap.org/data/2.5/forecast"
+URL_AIRE = "https://api.openweathermap.org/data/2.5/air_pollution"
 
 def obtener_clima_actual(ciudad):
     params={
@@ -62,6 +63,7 @@ def obtener_clima_actual(ciudad):
     }
 
     return resultado
+
 
 def darPronosticos(ciudad):
     params = {
@@ -116,19 +118,94 @@ def darPronosticos(ciudad):
     return resultado
 
 
-
 def calidadAire(ciudad):
-    pass
+    params_clima = {
+        'q': ciudad,
+        'appid': API_KEY,
+        'units': 'metric',
+        'lang': 'es'
+    }
+
+    resp_clima = requests.get(BASE_URL_CLIMA_ACTUAL, params=params_clima)
+    data_clima = resp_clima.json()
+
+    if resp_clima.status_code != 200 or "coord" not in data_clima:
+        return {
+            "error": f"No se pudo obtener las coordenadas de '{ciudad}'.",
+            "status": data_clima.get("message", "Error desconocido")
+        }
+
+    lat = data_clima["coord"]["lat"]
+    lon = data_clima["coord"]["lon"]
+
+    params_aire = {
+        'lat': lat,
+        'lon': lon,
+        'appid': API_KEY
+    }
+
+    resp_aire = requests.get(URL_AIRE, params=params_aire)
+    data_aire = resp_aire.json()
+
+    if resp_aire.status_code != 200 or "list" not in data_aire:
+        return {
+            "error": f"No se pudo obtener la calidad del aire en '{ciudad}'.",
+            "status": data_aire.get("message", "Error desconocido")
+        }
+
+    indice = data_aire["list"][0]["main"]["aqi"]
+    componentes = data_aire["list"][0]["components"]
+
+    descripcion = {
+        1: "Muy buena",
+        2: "Buena",
+        3: "Moderada",
+        4: "Mala",
+        5: "Muy mala"
+    }
+
+    mensaje = {
+        1: "Excelente día para salir o hacer deporte al aire libre.",
+        2: "Buena calidad del aire. Perfecto para pasear.",
+        3: "Calidad del aire moderada. Si eres sensible, evita ejercicio intenso afuera.",
+        4: "El aire no es saludable. Evita estar mucho tiempo al aire libre.",
+        5: "Muy mala calidad del aire. Quédate en interiores si puedes."
+    }
+
+    resultado = {
+        "ciudad": data_clima["name"],
+        "pais": data_clima["sys"]["country"],
+        "coordenadas": {"lat": lat, "lon": lon},
+        "calidad_aire": {
+            "indice": indice,
+            "descripcion": descripcion[indice],
+            "mensaje": mensaje[indice],
+            "componentes": {
+                "CO (monóxido de carbono)": componentes["co"],
+                "NO₂ (dióxido de nitrógeno)": componentes["no2"],
+                "O₃ (ozono)": componentes["o3"],
+                "PM₂.₅ (partículas finas)": componentes["pm2_5"],
+                "PM₁₀ (partículas gruesas)": componentes["pm10"]
+            }
+        },
+        "última_actualización": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    }
+
+    return resultado
 
 
-ciudad = input("Ingrese la ciudad: ")
-pronostico =darPronosticos(ciudad)
+print ("____MENU___")
+ciudad=input ("Ingrese la ciudad: ")
+descicion=int (input("que desea ver \n 1 --> clima actual \n 2 --> pronostico \n 3 --> calidad de aire"))
+if descicion == 1:
+    clima = obtener_clima_actual(ciudad)
+    print(json.dumps(clima, indent=4, ensure_ascii=False))
+if descicion == 2:
+    pronostico = darPronosticos(ciudad)
+    print(json.dumps(pronostico, indent=4, ensure_ascii=False))
+if descicion == 3:
+    calidad = calidadAire(ciudad)
+    print(json.dumps(calidad, indent=4, ensure_ascii=False))
 
-print(json.dumps(pronostico, indent=4, ensure_ascii=False))
 
-"""
-ciudad = input("Ingrese la ciudad: ")
-clima = obtener_clima_actual(ciudad)
-print(json.dumps(clima, indent=4, ensure_ascii=False))
-"""
 
