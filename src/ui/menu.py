@@ -2,7 +2,7 @@
 mostrar menú principal, capturar entrada del usuario, gestionar navegación entre opciones
 """
 
-
+# AL FINAL
 def mostrar_menu_principal():
     """PRIMERA PROPUESTA DE MOSTRAR EL MENU"""
 
