@@ -6,3 +6,4 @@ El directorio API tendrá lo siguiente:
 2. El sistema de caché para optimizar consultas
 3. Formateo de datos JSON recibidos
 """
+from weather_api import obtener_clima_actual,darPronosticos,calidadAire
