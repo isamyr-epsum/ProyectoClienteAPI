@@ -193,19 +193,24 @@ def calidadAire(ciudad):
 
     return resultado
 
-
-print ("____MENU___")
-ciudad=input ("Ingrese la ciudad: ")
-descicion=int (input("que desea ver \n 1 --> clima actual \n 2 --> pronostico \n 3 --> calidad de aire"))
-if descicion == 1:
-    clima = obtener_clima_actual(ciudad)
-    print(json.dumps(clima, indent=4, ensure_ascii=False))
-if descicion == 2:
-    pronostico = darPronosticos(ciudad)
-    print(json.dumps(pronostico, indent=4, ensure_ascii=False))
-if descicion == 3:
-    calidad = calidadAire(ciudad)
-    print(json.dumps(calidad, indent=4, ensure_ascii=False))
+continuar= True
+while continuar:
+    print("____MENU___")
+    ciudad = input("Ingrese la ciudad: ")
+    descicion = int(
+        input("que desea ver \n 1 --> clima actual \n 2 --> pronostico \n 3 --> calidad de aire \n 4 --> salir  \n respuesta: "))
+    if descicion == 1:
+        clima = obtener_clima_actual(ciudad)
+        print(json.dumps(clima, indent=4, ensure_ascii=False))
+    if descicion == 2:
+        pronostico = darPronosticos(ciudad)
+        print(json.dumps(pronostico, indent=4, ensure_ascii=False))
+    if descicion == 3:
+        calidad = calidadAire(ciudad)
+        print(json.dumps(calidad, indent=4, ensure_ascii=False))
+    if descicion == 4:
+        print("adios")
+        continuar= False
 
 
 
