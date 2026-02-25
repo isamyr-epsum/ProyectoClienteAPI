@@ -11,7 +11,8 @@ import json
 from collections import defaultdict
 
 API_KEY = "a24cf1baa02349b165a1f6206bf525bc"
-BASE_URL = "https://api.openweathermap.org/data/2.5/weather"
+BASE_URL_CLIMA_ACTUAL = "https://api.openweathermap.org/data/2.5/weather",
+BASE_URL_PRONOSTICO= "https://api.openweathermap.org/data/2.5/forecast"
 
 def obtener_clima_actual(ciudad):
     params={
@@ -20,7 +21,7 @@ def obtener_clima_actual(ciudad):
         'units': 'metric',
         'lang': 'es',
     }
-    response = requests.get(BASE_URL, params=params)
+    response = requests.get(BASE_URL_CLIMA_ACTUAL, params=params)
     data=response.json()
 
     if response.status_code != 200:
@@ -63,12 +64,71 @@ def obtener_clima_actual(ciudad):
     return resultado
 
 def darPronosticos(ciudad):
-    pass
+    params = {
+        'q': ciudad,
+        'appid': API_KEY,
+        'units': 'metric',
+        'lang': 'es'
+    }
+
+    response = requests.get(BASE_URL_PRONOSTICO, params=params)
+    data = response.json()
+
+    if response.status_code != 200 or "list" not in data:
+        return {
+            "error": f"No se pudo obtener el pronóstico para '{ciudad}'.",
+            "status": data.get("message", "Respuesta inválida del servidor"),
+            "codigo": data.get("cod", "sin código")
+        }
+
+    pronostico_por_dia = defaultdict(list)
+    for entrada in data["list"]:
+        fecha = entrada["dt_txt"].split(" ")[0]
+        pronostico_por_dia[fecha].append(entrada)
+
+    pronostico_resumido = []
+
+    for fecha, entradas in list(pronostico_por_dia.items())[:5]:
+        temps = [e["main"]["temp"] for e in entradas]
+        humedades = [e["main"]["humidity"] for e in entradas]
+        probabilidades_lluvia = [e.get("pop", 0) for e in entradas]
+        descripciones = [e["weather"][0]["description"] for e in entradas]
+
+        descripcion_principal = max(set(descripciones), key=descripciones.count)
+
+        resumen_dia = {
+            "fecha": fecha,
+            "temperatura_min": round(min(temps), 1),
+            "temperatura_max": round(max(temps), 1),
+            "descripcion": descripcion_principal.capitalize(),
+            "humedad_promedio": round(sum(humedades) / len(humedades), 1),
+            "probabilidad_lluvia": round(sum(probabilidades_lluvia) / len(probabilidades_lluvia) * 100, 1)
+        }
+        pronostico_resumido.append(resumen_dia)
+
+    resultado = {
+        "ciudad": data["city"]["name"],
+        "pais": data["city"]["country"],
+        "pronostico_5_dias": pronostico_resumido,
+        "última_actualización": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    }
+
+    return resultado
+
+
+
 def calidadAire(ciudad):
     pass
 
+
+ciudad = input("Ingrese la ciudad: ")
+pronostico =darPronosticos(ciudad)
+
+print(json.dumps(pronostico, indent=4, ensure_ascii=False))
+
+"""
 ciudad = input("Ingrese la ciudad: ")
 clima = obtener_clima_actual(ciudad)
 print(json.dumps(clima, indent=4, ensure_ascii=False))
-
+"""
 
