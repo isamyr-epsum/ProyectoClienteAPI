@@ -7,8 +7,8 @@ Cada desarrollador debe tener su propia clave API de OpenWeatherMap (por consult
 
 # API Configuration
 
-API_KEY = "a24cf1baa02349b165a1f6206bf525bc"  # Obtener en: https://openweathermap.org/api
-API_BASE_URL = "https://api.openweathermap.org/data/2.5/weather"
+API_KEY = "TU_CLAVE_API_AQUI"  # Obtener en: https://openweathermap.org/api
+API_BASE_URL = "https://api.openweathermap.org/data/2.5"
 
 # Configuración de caché
 CACHE_ENABLED = True

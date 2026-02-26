@@ -2,22 +2,19 @@
 - realizar peticiones HTTP a la API
 - gestionar autenticación
 - manejo de errores de conexión
+
 """
 #Añadir imports necesarios
 import requests
 import datetime
 import json
 from collections import defaultdict
+from config import API_KEY , BASE_URL_CLIMA_ACTUAL, BASE_URL_PRONOSTICO ,URL_AIRE
 
-API_KEY = "a24cf1baa02349b165a1f6206bf525bc"
-BASE_URL_CLIMA_ACTUAL = "https://api.openweathermap.org/data/2.5/weather"
-BASE_URL_PRONOSTICO= "https://api.openweathermap.org/data/2.5/forecast"
-URL_AIRE = "https://api.openweathermap.org/data/2.5/air_pollution"
 
 def obtener_clima_actual(ciudad):
     params={
         'q': ciudad,
-        'appid': API_KEY,
         'units': 'metric',
         'lang': 'es',
     }
