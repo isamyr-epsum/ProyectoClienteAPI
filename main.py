@@ -1,4 +1,4 @@
-"""Aplicación de Consulta Meteorológica
+"""hhjhjhjhjhAplicación de Consulta Meteorológica
 Punto de entrada principal del programa """
 from time import sleep
 
