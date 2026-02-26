@@ -1,0 +1,11 @@
+Consulto en Madrid el pronóstico de 5 días:
+2026-02-26 -> 17.35ºC
+2026-02-27 -> 14.85ºC
+2026-02-28 -> 14.35ºC
+2026-03-01 -> 12.75ºC
+2026-03-02 -> 12.8ºC
+26/02/2026 13:37:32
+Consulto en Madrid el clima actual (18.74°C (sensación 17.51°C)ºC) - 26/02/2026 13:52:10
+Consulto en Barcelona el clima actual (16.58°C (sensación 15.89°C)) - 26/02/2026 13:53:01
+Consulto en Madrid la calidad de aire (Buena calidad del aire. Perfecto para pasear. - 26/02/2026 14:13:44
+Consulto en Barcelona la calidad de aire (Buena calidad del aire. Perfecto para pasear.) - 26/02/2026 14:14:18

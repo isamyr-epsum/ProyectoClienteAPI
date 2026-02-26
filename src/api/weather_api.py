@@ -15,6 +15,7 @@ from config import API_KEY , BASE_URL_CLIMA_ACTUAL, BASE_URL_PRONOSTICO ,URL_AIR
 def obtener_clima_actual(ciudad):
     params={
         'q': ciudad,
+        'appid': API_KEY,
         'units': 'metric',
         'lang': 'es',
     }
@@ -189,21 +190,37 @@ def calidadAire(ciudad):
 
     return resultado
 
-continuar= True
-while continuar:
-    print("____MENU___")
-    ciudad = input("Ingrese la ciudad: ")
-    descicion = int(
-        input("que desea ver \n 1 --> clima actual \n 2 --> pronostico \n 3 --> calidad de aire \n 4 --> salir  \n respuesta: "))
-    if descicion == 1:
-        clima = obtener_clima_actual(ciudad)
-        print(json.dumps(clima, indent=4, ensure_ascii=False))
-    if descicion == 2:
-        pronostico = darPronosticos(ciudad)
-        print(json.dumps(pronostico, indent=4, ensure_ascii=False))
-    if descicion == 3:
-        calidad = calidadAire(ciudad)
-        print(json.dumps(calidad, indent=4, ensure_ascii=False))
-    if descicion == 4:
-        print("adios")
-        continuar= False
+def weather_main():
+    continuar= True
+    while continuar:
+        print("____MENU___")
+        ciudad = input("Ingrese la ciudad: ")
+        descicion = int(
+            input("que desea ver \n 1 --> clima actual \n 2 --> pronostico \n 3 --> calidad de aire \n 4 --> salir  \n respuesta: "))
+        if descicion == 1:
+            clima = obtener_clima_actual(ciudad)
+            accion = "el clima actual"
+            print(json.dumps(clima, indent=4, ensure_ascii=False))
+            temperatura = clima["temperatura"]
+            return {"decision": descicion, "datos": temperatura, "accion": accion, "ciudad": ciudad}
+        if descicion == 2:
+            pronostico = darPronosticos(ciudad)
+            accion = "el pronóstico de 5 días"
+            print(json.dumps(pronostico, indent=4, ensure_ascii=False))
+            fechas = []
+            temperatura_media = []
+            for fecha in pronostico["pronostico_5_dias"]:
+                fechas.append(fecha["fecha"])
+                media = (fecha["temperatura_max"] + fecha["temperatura_min"])/2
+                temperatura_media.append(round(media, 2))
+            datos = [fechas, temperatura_media]
+            return {"decision": descicion, "datos": datos,"accion": accion, "ciudad": ciudad}
+        if descicion == 3:
+            calidad = calidadAire(ciudad)
+            accion = "la calidad de aire"
+            print(json.dumps(calidad, indent=4, ensure_ascii=False))
+            datos = calidad["calidad_aire"]["mensaje"]
+            return {"decision": descicion, "datos": datos, "accion": accion, "ciudad": ciudad}
+        if descicion == 4:
+            print("adios")
+            continuar= False

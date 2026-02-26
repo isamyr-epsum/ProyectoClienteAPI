@@ -3,7 +3,7 @@ Punto de entrada principal del programa """
 from time import sleep
 
 
-from src.api.weather_api import obtener_clima_actual
+from src.api.weather_api import weather_main
 from src.data.storage import guardar_historial, cargar_historial, limpiar_historial
 
 """
@@ -26,9 +26,15 @@ while True:
         print("\nGracias por su visita!")
         break
     elif opcion == "1":
-        ciudad = input("Introduzca una ciudad para ver")
-        obtener_clima_actual(ciudad)
-        print("\n Aguarde: funcion pendiente - sprint 2!")
+        resultado = weather_main()
+        print("Este es el resultado en JSON")
+        print(resultado)
+        print("Y este el resultado para guardar en el historial")
+        decision = resultado["decision"]
+        ciudad = resultado["ciudad"]
+        accion = resultado["accion"]
+        datos = resultado["datos"]
+        guardar_historial(decision,ciudad, accion, datos)
     elif opcion == "2":
         print("\nAguarde: funcion pendiente - sprint 2!")
     elif opcion == "3":
