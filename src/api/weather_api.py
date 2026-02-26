@@ -12,10 +12,10 @@ import json
 from collections import defaultdict
 from config import API_KEY , BASE_URL_CLIMA_ACTUAL, BASE_URL_PRONOSTICO ,URL_AIRE
 
-
 def obtener_clima_actual(ciudad):
     params={
         'q': ciudad,
+        'appid': API_KEY,
         'units': 'metric',
         'lang': 'es',
     }
