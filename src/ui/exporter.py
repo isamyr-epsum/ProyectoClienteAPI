@@ -1,18 +1,21 @@
-"""
-- exportar los datos en formato JSON
-- exportar los datos en formato CSV
-- generar los reportes en PDF
-"""
+import json
+import csv
+from fpdf import FPDF
 
-# exporta datos en formato json,
+
 def exportar_json(datos, nombre_archivo):
-    # Sprint 2
-    pass
+    try:
+        with open(nombre_archivo + ".json", "w", encoding="utf-8") as f:
+            json.dump(datos, f, indent=4, ensure_ascii=False)
+        print(f"Se ha guardado el archivo en formato JSON: {nombre_archivo}.json")
+    except:
+        print("Error al guardar JSON")
 
-#Exportar datos en formato CSV
+
 def exportar_csv(datos, nombre_archivo):
-    #sprint 2
-    pass
+    if not datos:
+        print("No hay datos para crear el CSV")
+
 
 #exportar y generar reporte en pdf
 def exportar_pdf(datos, nombre_archivo):
