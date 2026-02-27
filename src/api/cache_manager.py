@@ -7,7 +7,7 @@
 
 
 # Esta funcion guarda los datos meteorologicos en la cache. ciudad:STRING y DATOS a cachear: dict
-def guardar_en_cache(ciudad, datos):
+def guardar_en_cache(ciudad, datos, tiempo_max=36000):
 
     # IMPLEMENTAR EN 2 SPRINT 2
     pass

@@ -9,3 +9,21 @@ Consulto en Madrid el clima actual (18.74°C (sensación 17.51°C)ºC) - 26/02/2
 Consulto en Barcelona el clima actual (16.58°C (sensación 15.89°C)) - 26/02/2026 13:53:01
 Consulto en Madrid la calidad de aire (Buena calidad del aire. Perfecto para pasear. - 26/02/2026 14:13:44
 Consulto en Barcelona la calidad de aire (Buena calidad del aire. Perfecto para pasear.) - 26/02/2026 14:14:18
+Consulto en Madrid el clima actual (18.92°C (sensación 17.65°C)) - 26/02/2026 19:24:51
+Consulto en Madrid el pronóstico de 5 días:
+2026-02-26 -> 17.8ºC
+2026-02-27 -> 11.6ºC
+2026-02-28 -> 14.15ºC
+2026-03-01 -> 12.95ºC
+2026-03-02 -> 11.95ºC
+26/02/2026 19:25:38
+Consulto en Madrid la calidad de aire (Buena calidad del aire. Perfecto para pasear.) - 26/02/2026 19:26:28
+Consulto en Madrid el clima actual (18.76°C (sensación 17.47°C)) - 26/02/2026 19:35:02
+Consulto en Madrid el pronóstico de 5 días:
+2026-02-26 -> 17.5ºC
+2026-02-27 -> 11.6ºC
+2026-02-28 -> 14.15ºC
+2026-03-01 -> 12.95ºC
+2026-03-02 -> 11.95ºC
+26/02/2026 19:43:54
+Consulto en Madrid la calidad de aire (Buena calidad del aire. Perfecto para pasear.) - 26/02/2026 19:44:14

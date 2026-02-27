@@ -6,15 +6,20 @@ import datetime
 
 #guarda una consulta en el historial
 def guardar_historial(decision, ciudad, accion, datos):
-# def guardar_historial():
     ahora = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     if decision == 1:
-        msg = f"Consulto en {ciudad} {accion} ({datos}) - {ahora}"
+        temperatura = datos["temperatura"]
+        msg = f"Consulto en {ciudad} {accion} ({temperatura}) - {ahora}"
     elif decision == 2:
-        fechas, temperaturas = datos
+        dates = []
+        temperatura_media = []
+        for fecha in datos["pronostico_5_dias"]:
+            dates.append(fecha["fecha"])
+            media = (fecha["temperatura_max"] + fecha["temperatura_min"])/2
+            temperatura_media.append(round(media, 2))
 
         lineas_pronostico = []
-        for fecha, temp in zip(fechas, temperaturas):
+        for fecha, temp in zip(dates, temperatura_media):
             linea = f"{fecha} -> {temp}ºC"
             lineas_pronostico.append(linea)
 
@@ -24,7 +29,8 @@ def guardar_historial(decision, ciudad, accion, datos):
                f"{bloque_pronostico}\n"
                f"{ahora}")
     elif decision == 3:
-        msg = f"Consulto en {ciudad} {accion} ({datos}) - {ahora}"
+        calidadAire = datos["calidad_aire"]["mensaje"]
+        msg = f"Consulto en {ciudad} {accion} ({calidadAire}) - {ahora}"
 
     with open("historial.txt", "a", encoding="utf-8") as f:
         f.write(msg + "\n")
@@ -39,7 +45,6 @@ def cargar_historial():
             print(line)
 
 #elimina el historial de consultas
-# TODO HECHO
 def limpiar_historial():
     print("Limpiando todo el historial")
     with open("historial.txt", "w", encoding="utf-8") as f:

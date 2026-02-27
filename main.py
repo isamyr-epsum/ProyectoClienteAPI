@@ -2,7 +2,7 @@
 Punto de entrada principal del programa """
 from time import sleep
 
-
+from src.api.cache_manager import guardar_en_cache
 from src.api.weather_api import weather_main
 from src.data.storage import guardar_historial, cargar_historial, limpiar_historial
 
@@ -35,6 +35,7 @@ while True:
         accion = resultado["accion"]
         datos = resultado["datos"]
         guardar_historial(decision,ciudad, accion, datos)
+        guardar_en_cache(ciudad, datos)
     elif opcion == "2":
         print("\nAguarde: funcion pendiente - sprint 2!")
     elif opcion == "3":
