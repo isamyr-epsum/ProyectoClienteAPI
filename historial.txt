@@ -27,3 +27,53 @@ Consulto en Madrid el pronóstico de 5 días:
 2026-03-02 -> 11.95ºC
 26/02/2026 19:43:54
 Consulto en Madrid la calidad de aire (Buena calidad del aire. Perfecto para pasear.) - 26/02/2026 19:44:14
+Consulto en Madrid el clima actual (11.89°C (sensación 10.49°C)) - 27/02/2026 11:07:52
+Consulto en Madrid el clima actual (12.1°C (sensación 10.72°C)) - 27/02/2026 11:08:50
+Consulto en Madrid el clima actual (12.1°C (sensación 10.72°C)) - 27/02/2026 11:12:38
+Consulto en Madrid el clima actual (12.1°C (sensación 10.72°C)) - 27/02/2026 11:13:06
+Consulto en Madrid el pronóstico de 5 días:
+2026-02-27 -> 15.0ºC
+2026-02-28 -> 13.5ºC
+2026-03-01 -> 11.1ºC
+2026-03-02 -> 11.55ºC
+2026-03-03 -> 12.55ºC
+27/02/2026 11:14:11
+Consulto en Madrid la calidad de aire (Excelente día para salir o hacer deporte al aire libre.) - 27/02/2026 11:14:22
+Consulto en Madrid la calidad de aire (Excelente día para salir o hacer deporte al aire libre.) - 27/02/2026 11:15:07
+Consulto en Madrid la calidad de aire (Excelente día para salir o hacer deporte al aire libre.) - 27/02/2026 11:15:57
+Consulto en Madrid el pronóstico de 5 días:
+2026-02-27 -> 15.05ºC
+2026-02-28 -> 13.5ºC
+2026-03-01 -> 11.1ºC
+2026-03-02 -> 11.55ºC
+2026-03-03 -> 12.55ºC
+27/02/2026 11:17:08
+Consulto en Madrid el pronóstico de 5 días:
+2026-02-27 -> 15.05ºC
+2026-02-28 -> 13.5ºC
+2026-03-01 -> 11.1ºC
+2026-03-02 -> 11.55ºC
+2026-03-03 -> 12.55ºC
+27/02/2026 11:17:26
+Consulto en Madrid el pronóstico de 5 días:
+2026-02-27 -> 15.05ºC
+2026-02-28 -> 13.5ºC
+2026-03-01 -> 11.1ºC
+2026-03-02 -> 11.55ºC
+2026-03-03 -> 12.55ºC
+27/02/2026 11:17:39
+Consulto en Madrid el pronóstico de 5 días:
+2026-02-27 -> 15.05ºC
+2026-02-28 -> 13.5ºC
+2026-03-01 -> 11.1ºC
+2026-03-02 -> 11.55ºC
+2026-03-03 -> 12.55ºC
+27/02/2026 11:18:12
+Consulto en Madrid el clima actual (12.1°C (sensación 10.72°C)) - 27/02/2026 11:18:29
+Consulto en Madrid el pronóstico de 5 días:
+2026-02-27 -> 15.05ºC
+2026-02-28 -> 13.5ºC
+2026-03-01 -> 11.1ºC
+2026-03-02 -> 11.55ºC
+2026-03-03 -> 12.55ºC
+27/02/2026 11:18:59
