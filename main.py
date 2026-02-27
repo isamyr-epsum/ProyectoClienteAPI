@@ -8,11 +8,10 @@ Fecha: Febrero 2026
 """
 from src.ui.menu import mostrar_menu_principal, obtener_opcion_usuario
 
-#Función principal de la aplicación
 def main():
 
     print("Aplicación de Clima")
-    print("Versión 0.1 - Sprint 1") # crear versiones, para controlar logros y errores que puedan surgir
+    print("Versión 0.1 - Sprint 1")
 
 while True:
     mostrar_menu_principal()
@@ -33,5 +32,4 @@ while True:
     else:
         print("\nLa opción no es valida. Intenta de nuevo!")
 
-#Ejecutar el programa
 main()

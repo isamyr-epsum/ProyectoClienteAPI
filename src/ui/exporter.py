@@ -16,6 +16,8 @@ def exportar_csv(datos, nombre_archivo):
     if not datos:
         print("No hay datos para crear el CSV")
         return
+    if isinstance(datos, dict):
+        datos = [datos]
     try:
         with open(nombre_archivo + ".csv", "w", newline='', encoding="utf-8") as f:
             campos = list(datos[0].keys())
@@ -32,17 +34,21 @@ def exportar_pdf(datos, nombre_archivo):
     if not datos:
         print("No hay datos para crear el PDF")
         return
+    if isinstance(datos, dict):
+        datos = [datos]
     try:
         pdf = FPDF()
         pdf.add_page()
-        pdf.set_font("Arial", "B", 14)
-        pdf.cell(0, 10, "Reporte de Clima", ln=True, align="C")
-        pdf.set_font("Arial", "", 12)
+        pdf.set_font("helvetica", "B", 14)
+        pdf.cell(0, 10, "Reporte", ln=True, align="C")
+        pdf.set_font("helvetica", "", 12)
         for fila in datos:
             for clave, valor in fila.items():
+                if isinstance(valor, dict):
+                    valor = json.dumps(valor, ensure_ascii=False)
                 pdf.cell(0, 8, f"{clave}: {valor}", ln=True)
             pdf.ln(2)
         pdf.output(nombre_archivo + ".pdf")
         print(f"Se ha guardado el archivo en formato PDF: {nombre_archivo}.pdf")
-    except:
-        print("Error al generar el PDF")
+    except Exception as e:
+        print(f"Error al generar el PDF: {e}")

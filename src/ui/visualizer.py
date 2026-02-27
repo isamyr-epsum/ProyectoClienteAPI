@@ -1,5 +1,8 @@
 import requests
 from config import API_KEY, BASE_URL_CLIMA_ACTUAL, BASE_URL_PRONOSTICO, URL_AIRE
+import datetime
+from collections import defaultdict
+
 
 def obtener_clima_actual(ciudad):
     parametros = {'q': ciudad, 'appid': API_KEY, 'units': 'metric', 'lang': 'es'}
@@ -22,4 +25,32 @@ def obtener_clima_actual(ciudad):
         "clima": descripcion.capitalize(),
         "temperatura": round(temperatura,1),
         "humedad": humedad,
+        "presion": presion,
+        "ultima_actualizacion": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     }
+    return resultado
+
+def pronostico_5_dias(ciudad):
+    parametros = {
+        'q': ciudad,
+        'appid': API_KEY,
+        'units': 'metric',
+        'lang': 'es'
+    }
+
+    try:
+        respuesta = requests.get(BASE_URL_PRONOSTICO, params=parametros)
+        datos = respuesta.json()
+
+        if respuesta.status_code != 200 or "list" not in datos:
+            return {"error": f"No se pudo obtener el pronóstico de '{ciudad}'."}
+
+    except requests.RequestException:
+        return {"error": "No se pudo conectar a la API."}
+
+    pronostico_por_dia = defaultdict(list)
+    for entrada in datos["list"]:
+        fecha = entrada["dt_txt"].split(" ")[0]
+        pronostico_por_dia[fecha].append(entrada)
+
+    return pronostico_por_dia
