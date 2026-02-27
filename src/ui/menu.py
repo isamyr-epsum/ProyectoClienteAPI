@@ -12,6 +12,7 @@ def mostrar_menu_principal():
     print("2. Consultar pronóstico")
     print("3. Ver historial")
     print("4. Exportar datos")
+
     print("5. Salir")
 
 

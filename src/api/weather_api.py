@@ -11,6 +11,8 @@ import datetime
 import json
 from collections import defaultdict
 from config import API_KEY , BASE_URL_CLIMA_ACTUAL, BASE_URL_PRONOSTICO ,URL_AIRE
+from src.ui.exporter import exportar_csv, exportar_json, exportar_pdf
+
 
 def obtener_clima_actual(ciudad):
     params={
@@ -198,7 +200,10 @@ while continuar:
         input("que desea ver \n 1 --> clima actual \n 2 --> pronostico \n 3 --> calidad de aire \n 4 --> salir  \n respuesta: "))
     if descicion == 1:
         clima = obtener_clima_actual(ciudad)
-        print(json.dumps(clima, indent=4, ensure_ascii=False))
+        # print(json.dumps(clima, indent=4, ensure_ascii=False))
+        exportar_csv(clima, "clima")
+        exportar_json(clima, "clima")
+        exportar_pdf(clima, "clima")
     if descicion == 2:
         pronostico = darPronosticos(ciudad)
         print(json.dumps(pronostico, indent=4, ensure_ascii=False))

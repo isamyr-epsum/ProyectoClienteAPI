@@ -1,5 +1,6 @@
 """hhjhjhjhjhAplicación de Consulta Meteorológica
 Punto de entrada principal del programa """
+from src.api.weather_api import obtener_clima_actual
 
 """
 Autores: Lucas, Isamir, Josue y Adrian DAW (2026) EPSUM
@@ -21,7 +22,8 @@ while True:
         print("\nGracias por su visita!")
         break
     elif opcion == "1":
-        print("\n Aguarde: funcion pendiente - sprint 2!")
+        ciudad = input("Ingrese ciudad: ")
+        obtener_clima_actual(ciudad)
     elif opcion == "2":
         print("\nAguarde: funcion pendiente - sprint 2!")
     elif opcion == "3":
