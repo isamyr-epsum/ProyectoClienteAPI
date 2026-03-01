@@ -1,8 +1,5 @@
 """
-- validar formato de nombres de ciudades
-- verificar integridad de datos recibidos de la API
-- comprobar rangos válidos (temperaturas, humedad, etc.)
-
+autor 
 """
 """ La funcion validar ciudad comprueba que el nombre de ciudad sea válido
     recibe parámetros: ciudad (str): Nombre de la ciudad a validary retorna: tupla: (es_valido, mensaje)
