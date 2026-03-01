@@ -91,6 +91,7 @@ def calcular_estadisticas(historial):
     ciudades = []
 
     for consulta in historial:
+
         # Extraer datos de cada consulta
         datos = consulta.get("datos", {})
 

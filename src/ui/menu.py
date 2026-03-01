@@ -8,11 +8,10 @@ def mostrar_menu_principal():
 
     print("\n"+ "========================================")
     print(" APLICACIÓN DE CONSULTA METEOROLÓGICA")
-    print("1. Consultar clima actual")
-    print("2. Consultar pronóstico")
-    print("3. Ver historial")
-    print("4. Exportar datos")
-    print("5. Salir")
+    print("1. Consultar")
+    print("2. Historial")
+    print("3. Exportar datos")
+    print("4. Salir")
 
 
 # capturar la opcion selecciona por el usuario, retorna la opcion elegida

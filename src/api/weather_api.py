@@ -199,19 +199,19 @@ def weather_main():
             input("que desea ver \n 1 --> clima actual \n 2 --> pronostico \n 3 --> calidad de aire \n 4 --> salir  \n respuesta: "))
         if descicion == 1:
             clima = obtener_clima_actual(ciudad)
-            accion = "el clima actual"
+            consulta = "Clima actual"
             print(json.dumps(clima, indent=4, ensure_ascii=False))
-            return {"decision": descicion, "datos": clima, "accion": accion, "ciudad": ciudad}
+            return {"datos": clima, "consulta": consulta, "ciudad": ciudad}
         if descicion == 2:
             pronostico = darPronosticos(ciudad)
-            accion = "el pronóstico de 5 días"
+            consulta = "pronostico"
             print(json.dumps(pronostico, indent=4, ensure_ascii=False))
-            return {"decision": descicion, "datos": pronostico,"accion": accion, "ciudad": ciudad}
+            return {"datos": pronostico, "consulta": consulta, "ciudad": ciudad}
         if descicion == 3:
             calidad = calidadAire(ciudad)
-            accion = "la calidad de aire"
+            consulta = "calidad aire"
             print(json.dumps(calidad, indent=4, ensure_ascii=False))
-            return {"decision": descicion, "datos": calidad, "accion": accion, "ciudad": ciudad}
+            return {"datos": calidad, "consulta": consulta, "ciudad": ciudad}
         if descicion == 4:
             print("adios")
             continuar= False

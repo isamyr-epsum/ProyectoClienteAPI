@@ -1,17 +1,19 @@
 """hhjhjhjhjhAplicación de Consulta Meteorológica
 Punto de entrada principal del programa """
+import json
+import os
 from time import sleep
 
-from src.api.cache_manager import guardar_en_cache, obtener_de_cache
-from src.api.weather_api import weather_main
-from src.data.storage import guardar_historial, cargar_historial, limpiar_historial
+from src.api import guardar_en_cache, obtener_de_cache, weather_main
+from src.data import guardar_historial, storage_main
+from src.logic import analizar_datos, calcular_estadisticas
+from src.ui import mostrar_menu_principal, obtener_opcion_usuario, exporter_main
 
 """
 PRUEBA LUCAS
 Autores: Lucas, Isamir, Josue y Adrian DAW (2026) EPSUM
 Fecha: Febrero 2026
 """
-from src.ui.menu import mostrar_menu_principal, obtener_opcion_usuario
 
 #Función principal de la aplicación
 def main():
@@ -23,32 +25,38 @@ while True:
     mostrar_menu_principal()
     opcion = obtener_opcion_usuario()
 
-    if opcion == "5":
+    if opcion == "4":
         print("\nGracias por su visita!")
         break
     elif opcion == "1":
         resultado = weather_main()
         print("Este es el resultado en JSON")
         print(resultado)
-        decision = resultado["decision"]
+        print("Estos son los datos de resultado")
+        print(resultado["datos"])
+        print("Analizamos los datos")
+        resultadoAnalizador = analizar_datos(resultado["datos"])
+        print("Mostramos los datos analizados")
+        print(resultadoAnalizador)
         ciudad = resultado["ciudad"]
-        accion = resultado["accion"]
+        accion = resultado["consulta"]
         datos = resultado["datos"]
-        guardar_historial(decision,ciudad, accion, datos)
+        guardar_historial(ciudad, accion, datos)
+        historial = []
+        with open("historial.txt", "r", encoding="utf-8") as f:
+            for consulta in f:
+                historial.append(json.loads(consulta))
+        estadisticas = calcular_estadisticas(historial)
+        print("Estadísticas del historial")
+        print(estadisticas)
         print("Guardamos en cache")
-        guardar_en_cache(ciudad, datos)
-        print("Obtenemos en cache")
-        obtener_de_cache(ciudad)
+        guardar_en_cache(ciudad, accion, resultadoAnalizador)
+        # print("Obtenemos en cache")
+        # obtener_de_cache(ciudad)
     elif opcion == "2":
-        print("\nAguarde: funcion pendiente - sprint 2!")
+        storage_main()
     elif opcion == "3":
-        guardar_historial("Madrid", "la temperatura actual", 18)
-        sleep(3)
-        cargar_historial()
-        sleep(2)
-        # limpiar_historial()
-    elif opcion == "4":
-        print("\nAguarde: funcion pendiente - sprint 2!")
+        exporter_main()
     else:
         print("\nLa opción no es valida. Intenta de nuevo!")
 

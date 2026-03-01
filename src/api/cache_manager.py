@@ -4,7 +4,6 @@
 - evitar llamadas innecesarias a la API
 """
 import json
-#Anadir imports necesarios
 import os.path
 import time
 
@@ -14,10 +13,11 @@ if not os.path.exists(CACHE_DIR):
     os.makedirs(CACHE_DIR)
 
 # Esta funcion guarda los datos meteorologicos en la cache. ciudad:STRING y DATOS a cachear: dict
-def guardar_en_cache(ciudad, datos, tiempo_max=20):
-    archivo = os.path.join(CACHE_DIR, f"{ciudad.lower()}.json")
+def guardar_en_cache(ciudad, accion, datos, tiempo_max=3600):
+    accion = accion.lower().replace(" ", "_")
+    archivo = os.path.join(CACHE_DIR, f"{accion}_{ciudad.lower()}.json")
     contenido = {
-        "tiempo": time.time(),
+        "tiempo_consulta": time.time(),
         "tiempo_max": tiempo_max,
         "datos": datos,
     }
@@ -35,10 +35,10 @@ def obtener_de_cache(ciudad):
     with open(archivo, "r", encoding="utf-8") as f:
         contenido = json.load(f)
 
-    tiempo = contenido.get("tiempo")
-    tiempo_max = contenido.get("tiempo_max", 20)
+    tiempo_consulta = contenido.get("tiempo_consulta")
+    tiempo_max = contenido.get("tiempo_max", 3600)
 
-    if time.time() - tiempo < tiempo_max:
+    if time.time() - tiempo_consulta < tiempo_max:
         datos = contenido.get("datos")
         print(datos)
     else:
