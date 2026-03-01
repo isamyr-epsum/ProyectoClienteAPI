@@ -78,7 +78,7 @@ def validar_clima_actual(datos):
     if "error" in datos:
         return False, f"Error de API: {datos.get('status', 'Desconocido')}"
 
-    # Verificar campos obligatorios
+    # Verificar los campos obligatorios
     campos_necesarios = ["ubicación", "temperatura", "humedad", "clima"]
 
     for campo in campos_necesarios:
@@ -161,12 +161,13 @@ def validar_calidad_aire(datos):
     return True, "Calidad del aire válida"
 
 
-# Función de prueba (puedes descomentar para probar)
+# Función de prueba
 if __name__ == "__main__":
-    # Pruebas básicas
-    print("=== Pruebas de validación ===")
+    # pruebas básicas
+    print("=== Pruebas de validación ===\n")
 
-    # Probar validación de ciudad
+    # probar validación de ciudad
+    print("--Validacion de la ciudades---")
     valido, msg = validar_ciudad("Madrid")
     print(f"Madrid: {valido} - {msg}")
 
@@ -176,6 +177,23 @@ if __name__ == "__main__":
     valido, msg = validar_ciudad("123")
     print(f"Solo números: {valido} - {msg}")
 
-    # Probar validación de temperatura
+    valido, msg = validar_ciudad("M")
+    print(f"Demasiado Corto: {valido} - {msg}")
+
+
+    # probar validación de temperatura
+    print("---Validadcion de temperaturas---")
     valido, temp = validar_temperatura("15.5°C")
     print(f"Temperatura: {valido} - {temp}")
+
+    valido, temp = validar_temperatura("100°C")
+    print(f"100°C - Fuera de rango: {valido} - Valor: {temp}")
+
+
+    #probar validacion de humedad
+    print("---Validacion de Humedad---")
+    valido, hum = validar_humedad("65%")
+    print(f"65%: {valido} -Valor {hum}")
+
+    valido, hum = validar_humedad("150%")
+    print(f"150% - Fuera de rango {valido} -Valor {hum}")
