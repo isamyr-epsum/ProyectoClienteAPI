@@ -1,15 +1,10 @@
-"""
-- realizar peticiones HTTP a la API
-- gestionar autenticación
-- manejo de errores de conexión
-
-"""
-#Añadir imports necesarios
 import requests
 import datetime
 import json
 from collections import defaultdict
 from config import API_KEY , BASE_URL_CLIMA_ACTUAL, BASE_URL_PRONOSTICO ,URL_AIRE
+from src.ui.exporter import exportar_csv, exportar_json, exportar_pdf
+from src.ui.visualizer import obtener_clima_actual_grafico, graficar_pronostico
 
 
 def obtener_clima_actual(ciudad):
@@ -48,15 +43,15 @@ def obtener_clima_actual(ciudad):
         mensaje_presion = "Presión normal."
 
     resultado = {
-        "ubicación": f"{data['name']}, {data['sys']['country']}",
-        "clima": f"{descripcion.capitalize()} ({mensaje_clima})",
-        "temperatura": f"{temp}°C (sensación {data['main']['feels_like']}°C)",
-        "humedad": f"{humedad}%",
-        "presión": f"{presion} hPa ({mensaje_presion})",
-        "viento": f"{data['wind']['speed']} m/s dirección {data['wind']['deg']}°",
-        "amanecer": datetime.datetime.fromtimestamp(data["sys"]["sunrise"]).strftime("%H:%M:%S"),
-        "atardecer": datetime.datetime.fromtimestamp(data["sys"]["sunset"]).strftime("%H:%M:%S"),
-        "última_actualización": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        "Ubicación": f"{data['name']}, {data['sys']['country']}",
+        "Clima": f"{descripcion.capitalize()} ({mensaje_clima})",
+        "Temperatura": f"{temp}°C (sensación {data['main']['feels_like']}°C)",
+        "Humedad": f"{humedad}%",
+        "Presión": f"{presion} hPa ({mensaje_presion})",
+        "Viento": f"{data['wind']['speed']} m/s dirección {data['wind']['deg']}°",
+        "Amanecer": datetime.datetime.fromtimestamp(data["sys"]["sunrise"]).strftime("%H:%M:%S"),
+        "Atardecer": datetime.datetime.fromtimestamp(data["sys"]["sunset"]).strftime("%H:%M:%S"),
+        "Última actualización": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     }
 
     return resultado
@@ -96,23 +91,23 @@ def darPronosticos(ciudad):
         descripcion_principal = max(set(descripciones), key=descripciones.count)
 
         resumen_dia = {
-            "fecha": fecha,
-            "temperatura_min": round(min(temps), 1),
-            "temperatura_max": round(max(temps), 1),
-            "descripcion": descripcion_principal.capitalize(),
-            "humedad_promedio": round(sum(humedades) / len(humedades), 1),
-            "probabilidad_lluvia": round(sum(probabilidades_lluvia) / len(probabilidades_lluvia) * 100, 1)
+            "Fecha": fecha,
+            "Temperatura mín": round(min(temps), 1),
+            "Temperatura máx": round(max(temps), 1),
+            "Descripción": descripcion_principal.capitalize(),
+            "Promedio Humedad": round(sum(humedades) / len(humedades), 1),
+            "Probabilidad de lluvia": round(sum(probabilidades_lluvia) / len(probabilidades_lluvia) * 100, 1)
         }
         pronostico_resumido.append(resumen_dia)
 
     resultado = {
-        "ciudad": data["city"]["name"],
-        "pais": data["city"]["country"],
-        "pronostico_5_dias": pronostico_resumido,
-        "última_actualización": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        "Ciudad": data["city"]["name"],
+        "País": data["city"]["country"],
+        "Pronóstico 5 dias": pronostico_resumido,
+        "Última actualización": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     }
 
-    return resultado
+    return pronostico_resumido
 
 
 def calidadAire(ciudad):
@@ -166,18 +161,18 @@ def calidadAire(ciudad):
         2: "Buena calidad del aire. Perfecto para pasear.",
         3: "Calidad del aire moderada. Si eres sensible, evita ejercicio intenso afuera.",
         4: "El aire no es saludable. Evita estar mucho tiempo al aire libre.",
-        5: "Muy mala calidad del aire. Quédate en interiores si puedes."
+        5: "Muy mala calidad del aire. Recomendable quedarse en el hogar."
     }
 
     resultado = {
-        "ciudad": data_clima["name"],
-        "pais": data_clima["sys"]["country"],
-        "coordenadas": {"lat": lat, "lon": lon},
-        "calidad_aire": {
-            "indice": indice,
-            "descripcion": descripcion[indice],
-            "mensaje": mensaje[indice],
-            "componentes": {
+        "Ciudad": data_clima["name"],
+        "País": data_clima["sys"]["country"],
+        "Coordenadas": {"lat": lat, "lon": lon},
+        "Calidad de aire": {
+            "Índice": indice,
+            "Descripción": descripcion[indice],
+            "Pronóstico": mensaje[indice],
+            "Componentes": {
                 "CO (monóxido de carbono)": componentes["co"],
                 "NO₂ (dióxido de nitrógeno)": componentes["no2"],
                 "O₃ (ozono)": componentes["o3"],
@@ -185,33 +180,35 @@ def calidadAire(ciudad):
                 "PM₁₀ (partículas gruesas)": componentes["pm10"]
             }
         },
-        "última_actualización": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        "Última actualización": datetime.datetime.now().strftime("%Y-%m-%d / %H:%M:%S")
     }
 
     return resultado
 
-def weather_main():
-    continuar= True
-    while continuar:
-        print("____MENU___")
-        ciudad = input("Ingrese la ciudad: ")
-        descicion = int(
-            input("que desea ver \n 1 --> clima actual \n 2 --> pronostico \n 3 --> calidad de aire \n 4 --> salir  \n respuesta: "))
-        if descicion == 1:
-            clima = obtener_clima_actual(ciudad)
-            consulta = "Clima actual"
-            print(json.dumps(clima, indent=4, ensure_ascii=False))
-            return {"datos": clima, "consulta": consulta, "ciudad": ciudad}
-        if descicion == 2:
-            pronostico = darPronosticos(ciudad)
-            consulta = "pronostico"
-            print(json.dumps(pronostico, indent=4, ensure_ascii=False))
-            return {"datos": pronostico, "consulta": consulta, "ciudad": ciudad}
-        if descicion == 3:
-            calidad = calidadAire(ciudad)
-            consulta = "calidad aire"
-            print(json.dumps(calidad, indent=4, ensure_ascii=False))
-            return {"datos": calidad, "consulta": consulta, "ciudad": ciudad}
-        if descicion == 4:
-            print("adios")
-            continuar= False
+continuar= True
+while continuar:
+    print("-------------------MENÚ-------------------")
+    ciudad = input("Ingrese la ciudad la cual desea consultar: ")
+    decision = int(
+        input("¿Qué desea ver? \n 1 --> Clima actual \n 2 --> Pronóstico \n 3 --> Calidad de aire \n 4 --> Salir  \n Por favor, introduzca su consulta: "))
+    if decision == 1:
+        print("Prueba")
+        obtener_clima_actual_grafico(ciudad)
+        print("Funciona")
+        # print(json.dumps(clima, indent=4, ensure_ascii=False))
+        """exportar_csv(clima, "clima")
+        exportar_json(clima, "clima")
+        exportar_pdf(clima, "clima")"""
+    if decision == 2:
+        pronostico = darPronosticos(ciudad)
+        graficar_pronostico(pronostico, ciudad)
+        print(json.dumps(pronostico, indent=4, ensure_ascii=False))
+    if decision == 3:
+        calidad = calidadAire(ciudad)
+        print(json.dumps(calidad, indent=4, ensure_ascii=False))
+    if decision == 4:
+        print("¡Hasta pronto!")
+        continuar= False
+
+
+
