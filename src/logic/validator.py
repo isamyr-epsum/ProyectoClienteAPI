@@ -1,26 +1,27 @@
 """
-autor 
+autor: Lucas
 """
 """ La funcion validar ciudad comprueba que el nombre de ciudad sea válido
     recibe parámetros: ciudad (str): Nombre de la ciudad a validary retorna: tupla: (es_valido, mensaje)
    """
 def validar_ciudad(ciudad):
-    # Verificar que no esté vacía
+    #  Primero compruebo que el usuario escribió algo
+    # Valida que el nombre de ciudad sea correcto antes de consultar la API
     if not ciudad or ciudad.strip() == "":
         return False, "El nombre de la ciudad está vacío"
 
-    # Limpiar espacios
+    # Limpiar espacios principios y alfinal
     ciudad = ciudad.strip()
 
-    # Debe tener al menos 2 caracteres
+    # Debe tener al menos 2 letras
     if len(ciudad) < 2:
         return False, "El nombre es demasiado corto"
 
-    # No más de 50 caracteres (límite razonable)
+    # No mas de 50 caracteres (limite razonable)
     if len(ciudad) > 50:
         return False, "El nombre es demasiado largo"
 
-    # No puede ser solo números
+    # No puede ser solo numeros ej_ 123: no es valido
     if ciudad.isdigit():
         return False, "El nombre no puede ser solo números"
 
@@ -29,34 +30,42 @@ def validar_ciudad(ciudad):
 
 def validar_temperatura(temp_str):
     """
+    - Extrae el numero de temperatura y verifica que este en un rango lógico
     Validar extrae y valida la temperatura de un string, recibe parámetros:
         temp_str (str): String con temperatura (ej: "15.5°C")
         retorna: tupla: (es_valido, temperatura_float)
+         EJEMPLO: La API devuelve "18.5°C" como texto, necesito convertirlo a numero
+        y verificar que sea una temperatura razonable
     """
     try:
-        # Quitar el símbolo de grados y extraer número
+        # Separo por °C para quedarme solo con el número
+        # Ejemplo: "18.5°C" → ["18.5", ""] → tomo "18.5"
         temp = float(temp_str.split("°C")[0])
 
-        # Verificar rango razonable (-60°C a 60°C)
+        # Verifico que sea una temperatura posible en la Tierra
+        # -60°C (Antártida) hasta 60°C (desiertos más calientes)
         if temp < -60 or temp > 60:
             return False, None
 
         return True, temp
 
     except (ValueError, IndexError):
+        # Si no puedo convertir a número, es inválida
         return False, None
 
 
 def validar_humedad(humedad_str):
     """
+    - Extrae el porcentaje de humedad y verifica que esté entre 0% y 100%
     Extrae y valida la humedad de un string, recibe los parametros :
         humedad_str (str): String con humedad (ej: "65%") y retorna: tupla: (es_valido, humedad_float)
     """
     try:
-        # Quitar el símbolo % y extraer número
+        # Quito el símbolo % y convierto a numero
+        # Ejemplo: "65%" → "65" → 65.0
         humedad = float(humedad_str.replace("%", ""))
 
-        # La humedad debe estar entre 0 y 100
+        # Si falla la conversión, es inválida
         if humedad < 0 or humedad > 100:
             return False, None
 
@@ -68,10 +77,12 @@ def validar_humedad(humedad_str):
 
 def validar_clima_actual(datos):
     """
+    - Verifica que los datos del clima de la API sean correctos
     Valida los datos del clima actual recibidos de la API, recibe parámetros:
         datos (dict): Diccionario con datos del clima y retornará: tupla: (es_valido, mensaje)
+    Antes de procesar los datos con data_analyzer.py, verifico que tengan todos los campos necesarios y en formato correcto
     """
-    # Si hay error en la respuesta
+    # Si la API devolvio un error, los datos no son válidos
     if "error" in datos:
         return False, f"Error de API: {datos.get('status', 'Desconocido')}"
 
@@ -104,7 +115,7 @@ def validar_pronostico(datos):
     if "error" in datos:
         return False, f"Error de API: {datos.get('status', 'Desconocido')}"
 
-    # Debe tener pronóstico de 5 días
+    # Debe tener pronostico de 5 dias
     if "pronostico_5_dias" not in datos:
         return False, "Falta el pronóstico"
 
@@ -114,16 +125,17 @@ def validar_pronostico(datos):
     if len(pronostico) == 0:
         return False, "El pronóstico está vacío"
 
-    # Validar cada día del pronóstico
+    # Validar cada dia del pronóstico
     for dia in pronostico:
         # Verificar campos básicos
         if "fecha" not in dia:
             return False, "Falta fecha en el pronóstico"
+        # Y temperaturas mínima y máxima
 
         if "temperatura_min" not in dia or "temperatura_max" not in dia:
             return False, "Faltan temperaturas en el pronóstico"
 
-        # La temperatura mínima debe ser menor que la máxima
+        # La mínima no puede ser mayor que la máxima (lógica básica)
         if dia["temperatura_min"] > dia["temperatura_max"]:
             return False, f"Error en temperaturas del día {dia['fecha']}"
 
@@ -131,8 +143,8 @@ def validar_pronostico(datos):
 
 
 def validar_calidad_aire(datos):
-    """ Valida los datos de calidad del aire recibe parámetros:
-        datos (dict): Diccionario con calidad del aire
+    """ Valida los datos de calidad del aire
+        recibe parámetros: datos (dict): Diccionario con calidad del aire
         y retorna: tupla: (es_valido, mensaje)
     """
     # Si hay error
@@ -145,20 +157,20 @@ def validar_calidad_aire(datos):
 
     calidad = datos["calidad_aire"]
 
-    # Verificar índice
+    # Verificar que haya un índice
     if "indice" not in calidad:
         return False, "Falta el índice de calidad"
 
     indice = calidad["indice"]
 
-    # El índice debe estar entre 1 y 5
+    # El índice APi debe estar entre 1 y 5
     if indice < 1 or indice > 5:
         return False, f"Índice fuera de rango: {indice}"
 
     return True, "Calidad del aire válida"
 
 
-# Función de prueba
+# Funcion de prueba
 if __name__ == "__main__":
     # pruebas básicas
     print("=== Pruebas de validación ===\n")
