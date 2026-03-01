@@ -3,8 +3,11 @@ import datetime
 import json
 from collections import defaultdict
 from config import API_KEY , BASE_URL_CLIMA_ACTUAL, BASE_URL_PRONOSTICO ,URL_AIRE
+from src.api import guardar_en_cache
+from src.logic import validar_ciudad, validar_clima_actual, validar_pronostico, validar_calidad_aire, analizar_datos
 from src.ui.exporter import exportar_csv, exportar_json, exportar_pdf
-from src.ui.visualizer import obtener_clima_actual_grafico, graficar_pronostico
+from src.data import guardar_historial
+from src.ui import exporter_main, exporter_main_consulta, graficar_clima_actual, graficar_pronostico
 
 
 def obtener_clima_actual(ciudad):
@@ -107,8 +110,7 @@ def darPronosticos(ciudad):
         "Última actualización": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     }
 
-    return pronostico_resumido
-
+    return resultado
 
 def calidadAire(ciudad):
     params_clima = {
@@ -185,30 +187,63 @@ def calidadAire(ciudad):
 
     return resultado
 
-continuar= True
-while continuar:
-    print("-------------------MENÚ-------------------")
-    ciudad = input("Ingrese la ciudad la cual desea consultar: ")
-    decision = int(
-        input("¿Qué desea ver? \n 1 --> Clima actual \n 2 --> Pronóstico \n 3 --> Calidad de aire \n 4 --> Salir  \n Por favor, introduzca su consulta: "))
-    if decision == 1:
-        print("Prueba")
-        obtener_clima_actual_grafico(ciudad)
-        print("Funciona")
-        # print(json.dumps(clima, indent=4, ensure_ascii=False))
-        """exportar_csv(clima, "clima")
-        exportar_json(clima, "clima")
-        exportar_pdf(clima, "clima")"""
-    if decision == 2:
-        pronostico = darPronosticos(ciudad)
-        graficar_pronostico(pronostico, ciudad)
-        print(json.dumps(pronostico, indent=4, ensure_ascii=False))
-    if decision == 3:
-        calidad = calidadAire(ciudad)
-        print(json.dumps(calidad, indent=4, ensure_ascii=False))
-    if decision == 4:
-        print("¡Hasta pronto!")
-        continuar= False
-
-
-
+def weather_main():
+    continuar = True
+    while continuar:
+        print("Menu de consultas")
+        ciudad = input("Ingrese la ciudad: ")
+        valido, msg =  validar_ciudad(ciudad)
+        if valido:
+            descicion = int(input("que desea ver \n 1 --> clima actual \n 2 --> pronostico \n 3 --> calidad de aire \n 4 --> salir  \n respuesta: "))
+            if descicion == 1:
+                clima = obtener_clima_actual(ciudad)
+                valido, msg = validar_clima_actual(clima)
+                if valido:
+                    consulta = "Clima actual"
+                    print(json.dumps(clima, indent=4, ensure_ascii=False))
+                    guardar_en_cache(ciudad, consulta, clima)
+                    clima = analizar_datos(clima)
+                    print(clima)
+                    guardar_historial(ciudad, consulta, clima)
+                    graficar_clima_actual(clima["Temperatura"], ciudad)
+                    respuesta = input("¿Quiere exportar estos datos? S/N --> ")
+                    if respuesta == "S":
+                        exporter_main_consulta(consulta, ciudad, clima)
+                    # return {"datos": clima, "consulta": consulta, "ciudad": ciudad}
+                else:
+                    print(msg)
+            if descicion == 2:
+                pronostico = darPronosticos(ciudad)
+                valido, msg = validar_pronostico(pronostico)
+                if valido:
+                    consulta = "Pronostico 5 dias"
+                    print(json.dumps(pronostico, indent=4, ensure_ascii=False))
+                    guardar_en_cache(ciudad, consulta, pronostico)
+                    guardar_historial(ciudad, consulta, pronostico)
+                    graficar_pronostico(pronostico, ciudad)
+                    print(pronostico)
+                    respuesta = input("¿Quiere exportar estos datos? S/N : --> ")
+                    if respuesta == "S":
+                        exporter_main_consulta(consulta, ciudad, pronostico)
+                    # return {"datos": pronostico, "consulta": consulta, "ciudad": ciudad}
+                else:
+                    print(msg)
+            if descicion == 3:
+                calidad = calidadAire(ciudad)
+                valido, msg = validar_calidad_aire(calidad)
+                if valido:
+                    consulta = "Calidad aire"
+                    print(json.dumps(calidad, indent=4, ensure_ascii=False))
+                    guardar_en_cache(ciudad, consulta, calidad)
+                    guardar_historial(ciudad, consulta, calidad)
+                    print(calidad)
+                    respuesta = input("¿Quiere exportar estos datos? S/N : --> ")
+                    if respuesta == "S":
+                        exporter_main_consulta(consulta, ciudad, calidad)
+                # return {"datos": calidad, "consulta": consulta, "ciudad": ciudad}
+            if descicion == 4:
+                print("adios")
+                continuar= False
+        else:
+            print(msg)
+    return None

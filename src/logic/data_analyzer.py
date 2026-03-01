@@ -19,14 +19,14 @@ def analizar_datos(datos_clima):
 
     # Extraer temperatura (quitar °C y convertir a número)
     try:
-        temp_str = datos_clima["temperatura"].split("°C")[0]
+        temp_str = datos_clima["Temperatura"].split("°C")[0]
         temperatura = float(temp_str)
     except:
         temperatura = None
 
     # Extraer humedad (quitar % y convertir a número)
     try:
-        humedad = float(datos_clima["humedad"].replace("%", ""))
+        humedad = float(datos_clima["Humedad"].replace("%", ""))
     except:
         humedad = None
 
@@ -53,17 +53,20 @@ def analizar_datos(datos_clima):
             nivel_humedad = "Húmedo"
     else:
         nivel_humedad = "Desconocido"
+    #
+    # temperatura = f"{temperatura}ºC"
+    # humedad = f"{humedad}%"
 
     # Crear el diccionario con el análisis
     analisis = {
-        "ubicacion": datos_clima.get("ubicación", "Desconocida"),
-        "temperatura": temperatura,
-        "sensacion_termica": sensacion,
-        "humedad": humedad,
-        "nivel_humedad": nivel_humedad,
-        "descripcion_clima": datos_clima.get("clima", ""),
-        "presion": datos_clima.get("presión", ""),
-        "viento": datos_clima.get("viento", "")
+        "Ubicacion": datos_clima.get("Ubicación", "Desconocida"),
+        "Temperatura": temperatura,
+        "Sensacion termica": sensacion,
+        "Humedad": humedad,
+        "Nivel de humedad": nivel_humedad,
+        "Descripcion clima": datos_clima.get("clima", ""),
+        "Presion": datos_clima.get("Presión", ""),
+        "Viento": datos_clima.get("Viento", "")
     }
 
     return analisis

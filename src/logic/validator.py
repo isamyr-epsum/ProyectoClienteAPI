@@ -79,19 +79,19 @@ def validar_clima_actual(datos):
         return False, f"Error de API: {datos.get('status', 'Desconocido')}"
 
     # Verificar campos obligatorios
-    campos_necesarios = ["ubicación", "temperatura", "humedad", "clima"]
+    campos_necesarios = ["Ubicación", "Temperatura", "Humedad", "Clima"]
 
     for campo in campos_necesarios:
         if campo not in datos:
             return False, f"Falta el campo: {campo}"
 
     # Validar temperatura
-    temp_valida, temp = validar_temperatura(datos["temperatura"])
+    temp_valida, temp = validar_temperatura(datos["Temperatura"])
     if not temp_valida:
         return False, "Temperatura con formato incorrecto"
 
     # Validar humedad
-    hum_valida, hum = validar_humedad(datos["humedad"])
+    hum_valida, hum = validar_humedad(datos["Humedad"])
     if not hum_valida:
         return False, "Humedad con formato incorrecto"
 
@@ -108,10 +108,10 @@ def validar_pronostico(datos):
         return False, f"Error de API: {datos.get('status', 'Desconocido')}"
 
     # Debe tener pronóstico de 5 días
-    if "pronostico_5_dias" not in datos:
+    if "Pronóstico 5 dias" not in datos:
         return False, "Falta el pronóstico"
 
-    pronostico = datos["pronostico_5_dias"]
+    pronostico = datos["Pronóstico 5 dias"]
 
     # Verificar que haya al menos un día
     if len(pronostico) == 0:
@@ -120,15 +120,15 @@ def validar_pronostico(datos):
     # Validar cada día del pronóstico
     for dia in pronostico:
         # Verificar campos básicos
-        if "fecha" not in dia:
+        if "Fecha" not in dia:
             return False, "Falta fecha en el pronóstico"
 
-        if "temperatura_min" not in dia or "temperatura_max" not in dia:
+        if "Temperatura mín" not in dia or "Temperatura máx" not in dia:
             return False, "Faltan temperaturas en el pronóstico"
 
         # La temperatura mínima debe ser menor que la máxima
-        if dia["temperatura_min"] > dia["temperatura_max"]:
-            return False, f"Error en temperaturas del día {dia['fecha']}"
+        if dia["Temperatura mín"] > dia["Temperatura máx"]:
+            return False, f"Error en temperaturas del día {dia['Fecha']}"
 
     return True, "Pronóstico válido"
 

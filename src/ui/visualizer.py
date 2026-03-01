@@ -106,6 +106,8 @@ def graficar_pronostico(pronostico, ciudad):
     humedad = []
     lluvia = []
 
+    pronostico = pronostico["Pronóstico 5 dias"]
+
     for p in pronostico:
         dias.append(p["Fecha"])
         temp_max.append(p["Temperatura máx"])

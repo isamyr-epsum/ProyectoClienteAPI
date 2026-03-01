@@ -16,7 +16,7 @@ def guardar_historial(ciudad, accion, datos):
         # msg = f"Consulto en {ciudad} {accion} ({temperatura}) - {ahora}"
     consulta = {
         "ciudad": ciudad,
-        "accion": accion,
+        "consulta": accion,
         "datos": datos,
     }
     consulta = json.dumps(consulta)
