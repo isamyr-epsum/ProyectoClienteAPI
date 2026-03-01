@@ -77,3 +77,23 @@ Consulto en Madrid el pronóstico de 5 días:
 2026-03-02 -> 11.55ºC
 2026-03-03 -> 12.55ºC
 27/02/2026 11:18:59
+Consulto en Madrid el clima actual (16.48°C (sensación 15.2°C)) - 27/02/2026 13:30:33
+Consulto en Madrid el clima actual (16.48°C (sensación 15.2°C)) - 27/02/2026 13:31:04
+Consulto en Madrid el clima actual (16.48°C (sensación 15.2°C)) - 27/02/2026 13:34:30
+Consulto en Madrid el pronóstico de 5 días:
+2026-02-27 -> 15.35ºC
+2026-02-28 -> 13.5ºC
+2026-03-01 -> 11.1ºC
+2026-03-02 -> 11.55ºC
+2026-03-03 -> 12.55ºC
+27/02/2026 13:34:38
+Consulto en Madrid el clima actual (16.48°C (sensación 15.2°C)) - 27/02/2026 13:35:03
+Consulto en Madrid el clima actual (16.48°C (sensación 15.2°C)) - 27/02/2026 13:36:21
+Consulto en Madrid el clima actual (16.48°C (sensación 15.2°C)) - 27/02/2026 13:36:36
+Consulto en Madrid el pronóstico de 5 días:
+2026-02-27 -> 15.4ºC
+2026-02-28 -> 13.5ºC
+2026-03-01 -> 11.1ºC
+2026-03-02 -> 11.55ºC
+2026-03-03 -> 12.55ºC
+27/02/2026 13:37:03

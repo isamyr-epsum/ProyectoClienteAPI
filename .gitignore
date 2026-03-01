@@ -23,6 +23,11 @@ secrets.py
 *.tmp
 
 #datos y caché
+cache/
 *.cache
 data/*.json
 data/*.csv
+*.txt
+*.json
+*.pdf
+*.csv
