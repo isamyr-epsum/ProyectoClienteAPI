@@ -7,6 +7,7 @@ from src.api.weather_api import weather_main
 from src.data.storage import guardar_historial, cargar_historial, limpiar_historial
 
 """
+PRUEBA LUCAS
 Autores: Lucas, Isamir, Josue y Adrian DAW (2026) EPSUM
 Fecha: Febrero 2026
 """
