@@ -1,36 +1,19 @@
-"""" procesar datos JSON de la API,
-- calcular estadísticas (temp. media, máxima, mínima)
-- detectar patrones y tendencias
-"""
-
-"""
-    toma los datos que devuelve la API (que vienen como strings con simbolos), 
-    los convierte a números, y los clasifica en categorías como 'Frío', 'Templado', 'Calido'."
-"""
 def analizar_datos(datos_clima):
-    """
-    Analiza los datos meteorológicos recibidos de la API
-    Parámetros: datos_clima (dict): Datos en formato JSON de la API
-    Retorna: dict: Estadísticas procesadas
-    """
     # Si hay error en los datos
     if "error" in datos_clima:
         return {"error": "No se pudieron analizar los datos"}
 
-    # Extraer temperatura (quitar °C y convertir a número)
     try:
         temp_str = datos_clima["Temperatura"].split("°C")[0]
         temperatura = float(temp_str)
     except:
         temperatura = None
 
-    # Extraer humedad (quitar % y convertir a número)
     try:
         humedad = float(datos_clima["Humedad"].replace("%", ""))
     except:
         humedad = None
 
-    # Clasificar la temperatura
     if temperatura is not None:
         if temperatura < 10:
             sensacion = "Frío"
@@ -43,7 +26,6 @@ def analizar_datos(datos_clima):
     else:
         sensacion = "Desconocido"
 
-    # Clasificar humedad
     if humedad is not None:
         if humedad < 30:
             nivel_humedad = "Seco"
@@ -53,9 +35,6 @@ def analizar_datos(datos_clima):
             nivel_humedad = "Húmedo"
     else:
         nivel_humedad = "Desconocido"
-    #
-    # temperatura = f"{temperatura}ºC"
-    # humedad = f"{humedad}%"
 
     # Crear el diccionario con el análisis
     analisis = {
@@ -71,20 +50,8 @@ def analizar_datos(datos_clima):
 
     return analisis
 
-
-
-"""
-recorre todo el historial de consultas guardadas, extrae las temperaturas y humedades, 
-y calcula la media, máxima y mínima. También cuenta qué ciudad se consultó más veces.
-"""
-
 def calcular_estadisticas(historial):
-    """
-    Calcula estadísticas de un historial de datos meteorológicos
-    Parametros: historial (list): Lista de consultas anteriores
-    Retorna:  dict: Estadísticas calculadas (temp media, máxima, mínima, etc.)
-    """
-    # Si el historial está vacío
+
     if not historial or len(historial) == 0:
         return {"error": "No hay datos en el historial"}
 
@@ -98,7 +65,6 @@ def calcular_estadisticas(historial):
         # Extraer datos de cada consulta
         datos = consulta.get("datos", {})
 
-        # Extraer temperatura
         try:
             temp_str = datos["temperatura"].split("°C")[0]
             temp = float(temp_str)
@@ -106,14 +72,12 @@ def calcular_estadisticas(historial):
         except:
             pass
 
-        # Extraer humedad
         try:
             hum = float(datos["humedad"].replace("%", ""))
             humedades.append(hum)
         except:
             pass
 
-        # Guardar ciudad consultada
         ciudad = consulta.get("ciudad", "")
         if ciudad:
             ciudades.append(ciudad)
@@ -136,7 +100,6 @@ def calcular_estadisticas(historial):
     # Contar cuántas veces se consultó cada ciudad
     ciudades_unicas = list(set(ciudades))
 
-    # Crear diccionario con estadísticas
     estadisticas = {
         "total_consultas": len(historial),
         "temperatura_media": temp_media,
