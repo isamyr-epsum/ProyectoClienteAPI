@@ -7,12 +7,7 @@
 """
 def analizar_datos(datos_clima):
     """
-    Analiza los datos meteorológicos recibidos de la API
-    Parámetros: datos_clima (dict): Datos en formato JSON de la API
-    Retorna: dict: Estadísticas procesadas
 
-    Ejemplo: si la api devuelve "18.5°C, eso lo convierte a 18.5"
-    y lo clasifica como 'templado'
     """
     # verificar primero si hay error en los datos
     if "error" in datos_clima:
