@@ -89,7 +89,6 @@ def pronostico_5_dias(ciudad):
     return resumen_pronostico
 
 def graficar_clima_actual(temperatura, ciudad):
-
     plt.figure(figsize=(4, 6))
     plt.bar([ciudad], [temperatura], color='orange')
     plt.title("Temperatura actual")

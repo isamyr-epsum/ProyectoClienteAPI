@@ -204,7 +204,7 @@ def weather_main():
                     clima = analizar_datos(clima)
                     print(json.dumps(clima, indent=4, ensure_ascii=False))
                     guardar_historial(ciudad, consulta, clima)
-                    graficar_clima_actual(clima["Temperatura"], ciudad)
+                    graficar_clima_actual(clima["temperatura"], ciudad)
                     respuesta = input("¿Quiere exportar estos datos? S/N --> ")
                     if respuesta == "S":
                         exporter_main_consulta(consulta, ciudad, clima)
