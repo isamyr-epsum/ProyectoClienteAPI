@@ -1,10 +1,6 @@
-git stat#  TODOS LOS INTEGRANTES LEER CON ATENCION EL README.MD PARA DESARROLLAR EL PROYECTO.
-# leer tambien archivo config.py 
-# 1. FASE: # Aplicación de Consulta Meteorológica CLima
-
-
-# Descripción de la aplicacion;
-Aplicación en Python que consulta información meteorológica en tiempo real mediante la API de OpenWeatherMap.(Estamos por decidir si usar OpenWeatherMAp)
+# DATACLIMA
+# Descripción de la aplicacion
+Aplicación en Python que consulta información meteorológica en tiempo real mediante la API de OpenWeatherMap.
 
 ## Autores
 - Lucas
@@ -16,29 +12,23 @@ Aplicación en Python que consulta información meteorológica en tiempo real me
 - Python 3.13
 - OpenWeatherMap API
 - Librerías: requests, matplotlib, pandas 
-# Sobre las librerias; 
-- requests es para hacer llamadas HTTP a la API,
-- matplotlib - "Gráficas con matplotlib/plotly" ( por definir/probar)
-- Pandas; libreria para análisis de datos (Por definir/ probar)
-
+# Sobre las librerias
+- requests:  Para hacer llamadas HTTP a la API
+- matplotlib: Gráficas con matplotlib/plotly
+- fpdf2: Para importar los datos a PDF
 
 ## Estado del Proyecto
-- Sprint 1 - en desarrollo
+- Finalizado
 
 ## Instalación
 ```bash
-
-# Instrucciones pendientes para el Sprint 2
+1. Haga el git clone con la url del proyecto
+2. Crea un entorno virtual para la instalación de las tecnologías
+3. Una vez activado el entorno virtual: pip install -r requirements.txt
+4. Ya esta instalado todo para darle uso
 ```
 
 ## Uso
 ```bash
-python main.py
+En la terminal, en el nivel principal del proyecto: python main.py
 ```
-
-
-# cosas propuestas por hacer por Mario;
-# guardar datos en de estasdiscas de 6 meses: dia mas caluroso
-
-
-# extra : intentar hacer un widget de escritorio

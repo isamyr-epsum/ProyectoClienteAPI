@@ -1,8 +1,3 @@
-"""
-- guardar respuestas de la API en caché
-- recuperar datos cacheados si están vigentes
-- evitar llamadas innecesarias a la API
-"""
 import json
 import os.path
 import time
